@@ -97,29 +97,65 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        # going to implement my version of merge sort
-        # I dont think I need memoization here since merge sort is already fast.
-        def merge(left, right, merged_list):
-            while len(left) > 0 and len(right) > 0:
-                if left[0] < right[0]:
-                    merged_list.append(left[0])
-                    del left[0]
-                else:
-                    merged_list.append(right[0])
-                    del right[0]
-            while len(left) > 0:
-                merged_list.append(left[0])
-                del left[0]
-            while len(right) > 0:
-                merged_list.append(right[0])
-                del right[0]
-            return merged_list
-        def merged_sort(arr, left, right): # I'm attempting minimal variable assignments
-            if len(arr) <= 1: # base case
-                return arr
-            return merge(merged_sort(left, left[:len(left)//2], left[len(left)//2:]), merged_sort(right, right[:len(right)//2], right[len(right)//2:]), []) # merged_arr initialize as empty list
-        self._list = merged_sort(self._list, self._list[:len(self._list)//2], self._list[len(self._list)//2:])
-        return self._list
+        """
+        it has predefined methods like compare and swap so any of the three O(n^2) sorts will do well here
+        implementing a bubble sort
+
+        # Make sure to pick up "None" as the last held item
+        sorted
+        item = None
+        [15, 24, 50]
+        item = 15
+        [(None), 24, 50]
+        ->
+        [None, (24), 50]
+        if (current) > item: swap
+        else: pass
+        <- swap
+        [(15), 24, 50]
+        ->
+        item = None
+        [15, (24), 50]
+
+
+
+        """
+        self.set_light_on()
+        while self.light_is_on():
+            self.set_light_off()
+            while self.can_move_right(): # [15, 24, 50] item=None | [50, 22, 1] item=None 
+                # print(self._position)
+                # print('before', self._item)
+                self.swap_item() # [(None), 24, 50] item=15 | [50, 22, 1] item=None 
+                # print('after', self._item)
+                # self.move_right() # [None, (24), 50] item=15  | [50, 22, 1] item=None 
+                
+                if self.compare_item() == -1:
+                    print(self._list)
+                    print('positon', self._position)
+                    self.move_left() # [(None), 24, 50] item=15  | [50, 22, 1] item=None 
+                    # print('before compare', self._item)
+                    self.swap_item() # [(15), 24, 50] item=None  | [50, 22, 1] item=None 
+                    # print('after compare', self._item)
+                    self.move_right() # [15, (24), 50] item=None  | [50, 22, 1] item=None 
+
+                if self.compare_item() == 1:
+                    # print('before compare', self._list)
+
+                    self.swap_item() 
+                    self.move_left()
+                    self.swap_item()
+                    # print('before compare', self._list)
+                    self.move_right()
+                    self.set_light_on()
+
+                    # print(self.light_is_on())
+
+                # print(self._item)
+                self.move_right()
+                print(self.can_move_right())
+            
+
       
             
 
@@ -128,7 +164,10 @@ if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    # l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+
+    l = [50, 22, 1, 4, 5, 43]
+    # l= [15, 24, 50]
 
     robot = SortingRobot(l)
 
