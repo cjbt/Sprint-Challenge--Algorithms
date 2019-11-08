@@ -97,7 +97,31 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        pass
+        # going to implement my version of merge sort
+        # I dont think I need memoization here since merge sort is already fast.
+        def merge(left, right, merged_list):
+            while len(left) > 0 and len(right) > 0:
+                if left[0] < right[0]:
+                    merged_list.append(left[0])
+                    del left[0]
+                else:
+                    merged_list.append(right[0])
+                    del right[0]
+            while len(left) > 0:
+                merged_list.append(left[0])
+                del left[0]
+            while len(right) > 0:
+                merged_list.append(right[0])
+                del right[0]
+            return merged_list
+        def merged_sort(arr, left, right): # I'm attempting minimal variable assignments
+            if len(arr) <= 1: # base case
+                return arr
+            return merge(merged_sort(left, left[:len(left)//2], left[len(left)//2:]), merged_sort(right, right[:len(right)//2], right[len(right)//2:]), []) # merged_arr initialize as empty list
+        self._list = merged_sort(self._list, self._list[:len(self._list)//2], self._list[len(self._list)//2:])
+        return self._list
+      
+            
 
 
 if __name__ == "__main__":
