@@ -2,11 +2,11 @@
 
 ## Exercise I
 
-a) O(n^3) runtime complexity and O(1) space complexity
+a) O(n^3) runtime complexity and O(1) space complexity since the amount that a has to loop is n times n times n. Although we are changing the produce of a depending on n \* n. it seems insignificant.
 
-b) O(logn) runtime complexity and O(1) space complexity
+b) O(logn) runtime complexity and O(1) space complexity. Although it has two loops, the outer loop has a runtime of O(n) and the inner loop is only looping up until n and j is doubling itself each time which cuts the it in half.
 
-c) O(n) runtime complexity and O(1) space complexity
+c) O(n) runtime complexity and O(1) space complexity since the recursion is based on bunnies decreasing by on until it hits 0. Very linear.
 
 ## Exercise II
 
